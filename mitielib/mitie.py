@@ -117,7 +117,7 @@ def python_to_mitie_str_array(tokens, r = None):
         if (isinstance(tokens[j], tuple)):
             ctokens[i] = tokens[j][0]
         else:
-            ctokens[i] = tokens[j]
+            ctokens[i] = ctypes.c_char_p(tokens[j].encode('utf-8'))
         i = i + 1
     ctokens[i] = None
     return ctokens
