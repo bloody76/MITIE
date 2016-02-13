@@ -211,7 +211,7 @@ class named_entity_extractor:
         num = _f.mitie_ner_get_num_detections(dets)
         temp = ([(xrange(_f.mitie_ner_get_detection_position(dets,i),
             _f.mitie_ner_get_detection_position(dets,i)+_f.mitie_ner_get_detection_length(dets,i)),
-            tags[_f.mitie_ner_get_detection_tag(dets,i)],
+            tags[_f.mitie_ner_get_detection_tag(dets,i)].decode('utf-8'),
             _f.mitie_ner_get_detection_score(dets,i)
             ) for i in xrange(num)])
         _f.mitie_free(dets)
