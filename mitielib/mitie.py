@@ -113,11 +113,11 @@ def python_to_mitie_str_array(tokens, r = None):
 
     ctokens = (ctypes.c_char_p*(len(r)+1))()
     i = 0
-    for j in r:
-        if (isinstance(tokens[j], tuple)):
-            ctokens[i] = tokens[j][0]
+    for token in tokens:
+        if (isinstance(token, tuple)):
+            ctokens[i] = token[0]
         else:
-            ctokens[i] = ctypes.c_char_p(tokens[j].encode('utf-8'))
+            ctokens[i] = ctypes.c_char_p(token.encode('utf-8'))
         i = i + 1
     ctokens[i] = None
     return ctokens
@@ -202,10 +202,10 @@ class named_entity_extractor:
         if (_f.mitie_save_named_entity_extractor(filename, self.__obj) != 0):
             raise Exception("Unable to save named_entity_extractor to the file " + filename);
 
-    def extract_entities(self, tokens):
+    def extract_entities(self, tokens, tokens_range):
         tags = self.get_possible_ner_tags()
         # Now extract the entities and return the results
-        dets = _f.mitie_extract_entities(self.__obj, python_to_mitie_str_array(tokens))
+        dets = _f.mitie_extract_entities(self.__obj, python_to_mitie_str_array(tokens, tokens_range))
         if (dets == None):
             raise Exception("Unable to create entity detections.")
         num = _f.mitie_ner_get_num_detections(dets)
